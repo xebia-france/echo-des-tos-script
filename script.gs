@@ -53,22 +53,6 @@ function emailHtml(html, images) {
     });
 }
 
-function createDocumentForHtml(html, images) {
-    var name = DocumentApp.getActiveDocument().getName() + ".html";
-    var newDoc = DocumentApp.create(name);
-    newDoc.getBody().setText(html);
-    for (var j = 0; j < images.length; j++)
-        newDoc.getBody().appendImage(images[j].blob);
-    newDoc.saveAndClose();
-}
-
-function dumpAttributes(atts) {
-    // Log the paragraph attributes.
-    for (var att in atts) {
-        Logger.log(att + ":" + atts[att]);
-    }
-}
-
 function processItem(item, listCounters, images) {
     var output = [];
     var prefix = "",
