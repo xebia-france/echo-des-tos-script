@@ -15,10 +15,10 @@ By running this function, the script will convert the Google doc to html and sen
 
 # TODO
 
+- Uplaod static resources to dedicated S3 bucket
 - Improve how the title block is generated
 - Separate editing/testing mode (send to your own Email) and the final publication mode (send to all Xebians and cc to Slack channel)
 - Font styles 
-- Image and caption formatting
 - Add more styling, currently there are only styles for `h1`, `h2`, `h3`, `p` & lists.
 
 Feel free to update/improve the script :)
