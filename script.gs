@@ -240,3 +240,29 @@ function processImage(item, images, output) {
         "name": name
     });
 }
+
+function getPhotoFileInXddDrive(folderId, email) {
+
+  var folder = DriveApp.getFolderById(folderId);
+  var pictures = folder.getFilesByName(email + ".jpg");
+
+  var results = Array(5) // there should be no more than 5 pictures per email :-/
+  var counter = 0
+  while (pictures.hasNext()) {
+    results[counter] = pictures.next()
+    counter++
+  }
+
+  // find picture with smallest size
+  var picture;
+  var minSize;
+  for (var i = 0; i < counter; i++) {
+    var currentPicture = results[i]
+    if (currentPicture && (!minSize || currentPicture.getSize() < minSize)) {
+      picture = currentPicture
+    }
+  }
+
+  return picture;
+}
+
