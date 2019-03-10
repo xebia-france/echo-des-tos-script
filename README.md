@@ -18,12 +18,6 @@ send an e-mail to you.
 > Warning: make sure your Echo's title is formatted with `title` and the
 > lecture time is formatted with `subtitle`
 
-# TODO
-
-- Uplaod static resources to dedicated S3 bucket
-- Improve how the title block is generated
-- Separate editing/testing mode (send to your own Email) and the final publication mode (send to all Xebians and cc to Slack channel)
-- Font styles 
-- Add more styling, currently there are only styles for `h1`, `h2`, `h3`, `p` & lists.
+# Contribution
 
 Feel free to update/improve the script :)
