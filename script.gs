@@ -156,6 +156,7 @@ function processItem(item, listCounters, images) {
 function processText(item, output) {
     var text = item.getText();
     var indices = item.getTextAttributeIndices();
+    var youTubeRegEx = /^(https:\/\/)(www\.)*(youtube\.com\/watch\?v=)([a-zA-Z0-9]+)/g;
 
     if (indices.length <= 1) {
         // Assuming that a whole para fully italic is a quote
@@ -164,7 +165,13 @@ function processText(item, output) {
         } else if (item.isItalic()) {
             output.push('<blockquote>' + text + '</blockquote>');
         } else if (item.getLinkUrl()) {
-            output.push('<a href="' + item.getLinkUrl() + '">' + text + '</a>');
+            var url = item.getLinkUrl()
+            if (url.match(youTubeRegEx)) {
+                var parsedGroups = youTubeRegEx.exec(url);
+                output.push('<a href="' + url + '"><img src="https://img.youtube.com/vi/' + parsedGroups[4] + '/hqdefault.jpg" style="width: 100%;"><br>' + url +'</a>')
+            } else {
+                output.push('<a href="' + item.getLinkUrl() + '">' + text + '</a>');
+            }
         } else if (text.trim().indexOf('http://') == 0) {
             output.push('<a href="' + text + '" rel="nofollow">' + text + '</a>');
         } else {
