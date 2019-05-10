@@ -20,9 +20,10 @@ send an e-mail to you.
 
 # Links
 
-Credentials/OAuth app : <https://console.developers.google.com/apis/credentials?organizationId=552523943544&project=tos-echo-formatting>
-
-GDoc API : <https://console.developers.google.com/apis/api/docs.googleapis.com/overview?organizationId=552523943544&project=tos-echo-formatting>
+- Credentials/OAuth app : <https://console.developers.google.com/apis/credentials?organizationId=552523943544&project=tos-echo-formatting>
+- GDoc API : <https://console.developers.google.com/apis/api/docs.googleapis.com/overview?organizationId=552523943544&project=tos-echo-formatting>
+- [Text Attributes
+  enumeration](https://developers.google.com/apps-script/reference/document/attribute)
 
 
 # Contribution
