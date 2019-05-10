@@ -18,6 +18,13 @@ send an e-mail to you.
 > Warning: make sure your Echo's title is formatted with `title` and the
 > lecture time is formatted with `subtitle`
 
+# Links
+
+Credentials/OAuth app : <https://console.developers.google.com/apis/credentials?organizationId=552523943544&project=tos-echo-formatting>
+
+GDoc API : <https://console.developers.google.com/apis/api/docs.googleapis.com/overview?organizationId=552523943544&project=tos-echo-formatting>
+
+
 # Contribution
 
 Feel free to update/improve the script :)
