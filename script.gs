@@ -15,7 +15,7 @@ function ConvertGoogleDocToCleanHtml() {
     var header = include("header.html")
     var footer = include("footer.html")
     var html = header + content + footer
-    
+
     emailHtml(html, images);
 }
 
@@ -130,6 +130,7 @@ function processItem(item, listCounters, images) {
                 suffix += "</ol>";
             }
         }
+
         if (item.isAtDocumentEnd() || item.getNextSibling().getType() != DocumentApp.ElementType.LIST_ITEM) {
             if (gt === DocumentApp.GlyphType.BULLET ||
                 gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
@@ -148,8 +149,10 @@ function processItem(item, listCounters, images) {
             }
         }
 
-
         counter++;
+        if (item.getNextSibling().getType() == DocumentApp.ElementType.LIST_ITEM && item.getNextSibling().getNestingLevel() < item.getNestingLevel()) {
+          counter = 0;
+        }
         listCounters[key] = counter;
     }
 
