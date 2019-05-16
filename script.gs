@@ -46,6 +46,8 @@ function emailHtml(html, images) {
     });
     MailApp.sendEmail({
         to: Session.getActiveUser().getEmail(),
+        //to: "XXX@xebia.fr",
+        //bcc: "YYY@xebiafr.slack.com",
         subject: name,
         htmlBody: html,
         inlineImages: inlineImages,
