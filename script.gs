@@ -201,7 +201,7 @@ function processText(item, output) {
 
             // If someone has written [xxx] and made this whole text some special font, like superscript
             // then treat it as a reference and make it superscript.
-            // Unfortunately in Google Docs, there's no way to detect superscript
+            // Unfortunately in Google Docs, there s no way to detect superscript
             if (partText.indexOf('[') == 0 && partText[partText.length - 1] == ']') {
                 output.push('<sup>' + partText + '</sup>');
             } else if (partText.trim().indexOf('http://') == 0) {
