@@ -198,6 +198,9 @@ function processText(item, output) {
             if (partAtts.BOLD) {
                 output.push('<b>');
             }
+            if (partAtts.UNDERLINE) {
+                output.push('<u>');
+            }
 
             // If someone has written [xxx] and made this whole text some special font, like superscript
             // then treat it as a reference and make it superscript.
@@ -218,6 +221,9 @@ function processText(item, output) {
             }
             if (partAtts.BOLD) {
                 output.push('</b>');
+            }
+            if (partAtts.UNDERLINE) {
+                output.push('</u>');
             }
 
         }
