@@ -15,7 +15,7 @@ function ConvertGoogleDocToCleanHtml() {
     var header = include("header.html")
     var footer = include("footer.html")
     var html = header + content + footer
-    
+
     emailHtml(html, images);
 }
 
@@ -120,7 +120,7 @@ function processItem(item, listCounters, images) {
             suffix = "</li>";
         }
 
-        if (item.isAtDocumentEnd() || item.getNextSibling().getType() != DocumentApp.ElementType.LIST_ITEM) {
+        if (item.getNextSibling().getType() == DocumentApp.ElementType.LIST_ITEM && item.getNextSibling().getNestingLevel() < item.getNestingLevel()) {
             if (gt === DocumentApp.GlyphType.BULLET ||
                 gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
                 gt === DocumentApp.GlyphType.SQUARE_BULLET) {
@@ -130,8 +130,47 @@ function processItem(item, listCounters, images) {
                 suffix += "</ol>";
             }
         }
+        if (item.isAtDocumentEnd() || item.getNextSibling().getType() != DocumentApp.ElementType.LIST_ITEM) {
+            if (gt === DocumentApp.GlyphType.BULLET ||
+                gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
+                gt === DocumentApp.GlyphType.SQUARE_BULLET) {
+                var times = 0;
+                var levels = item.getNestingLevel();
+                var acc = "";
+                while (times < levels) {
+                  acc += "</ul>";
+                  times += 1;
+                }
+                suffix += acc + "</ul>";
+            } else {
+                // Ordered list (<ol>):
+                suffix += "</ol>";
+            }
+        }
+
+
+        if (item.isAtDocumentEnd() || item.getNextSibling().getType() != DocumentApp.ElementType.LIST_ITEM) {
+            if (gt === DocumentApp.GlyphType.BULLET ||
+                gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
+                gt === DocumentApp.GlyphType.SQUARE_BULLET) {
+                var times = 0;
+                var levels = item.getNestingLevel();
+                var acc = "";
+                while (times < levels) {
+                  acc += "</ul>";
+                  times += 1;
+                }
+                suffix += acc + "</ul>";
+            } else {
+                // Ordered list (<ol>):
+                suffix += "</ol>";
+            }
+        }
 
         counter++;
+        if (item.getNextSibling().getType() == DocumentApp.ElementType.LIST_ITEM && item.getNextSibling().getNestingLevel() < item.getNestingLevel()) {
+            counter = 0;
+        }
         listCounters[key] = counter;
     }
 
