@@ -239,6 +239,7 @@ function processText(item, output) {
             }
             if (partAtts.UNDERLINE) {
                 output.push('<u>');
+            }
             if (partAtts.STRIKETHROUGH) {
                 output.push('<del>');
             }
@@ -265,6 +266,7 @@ function processText(item, output) {
             }
             if (partAtts.UNDERLINE) {
                 output.push('</u>');
+            }
             if (partAtts.STRIKETHROUGH) {
                 output.push('</del>');
             }
