@@ -46,6 +46,8 @@ function emailHtml(html, images) {
     });
     MailApp.sendEmail({
         to: Session.getActiveUser().getEmail(),
+        //to: "allfrance@xebia.fr",
+        //bcc: "v3h3d0y6a2q9d3d8@xebiafr.slack.com",
         subject: name,
         htmlBody: html,
         inlineImages: inlineImages,
