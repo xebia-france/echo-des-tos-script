@@ -151,7 +151,7 @@ function processItem(item, listCounters, images) {
 
         counter++;
         if (item.getNextSibling().getType() == DocumentApp.ElementType.LIST_ITEM && item.getNextSibling().getNestingLevel() < item.getNestingLevel()) {
-          counter = 0;
+            counter = 0;
         }
         listCounters[key] = counter;
     }
