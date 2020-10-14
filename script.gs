@@ -64,7 +64,7 @@ function processItem(item, listCounters, images) {
         switch (item.getHeading()) {
             // Add a # for each heading level. No break, so we accumulate the right number.
             case DocumentApp.ParagraphHeading.TITLE:
-                prefix = '<div class="main-title"><img src="http://blog.xebia.fr/wp-content/uploads/2017/10/header-cto.jpg" alt="photo" style="width:100%;" align="right"/>'+ 
+                prefix = '<div class="main-title"><img src="https://github.com/xebia-france/echo-des-tos-script/raw/feature/pse-ui/static/header.png?v=2" alt="photo" style="width:100%;" align="right"/>'+ 
                 '<h1 class="main-title">', 
                 suffix = '</h1></div><div class="content">';
                 break;
