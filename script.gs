@@ -61,6 +61,17 @@ function processItem(item, listCounters, images) {
         suffix = "";
 
     if (item.getType() == DocumentApp.ElementType.PARAGRAPH) {
+      
+        var alignment = item.getAlignment();
+        var alignmentClass = "";
+        switch (alignment) {
+            case DocumentApp.HorizontalAlignment.CENTER:
+                alignmentClass = "centered";
+                break;
+            default:
+                break;
+        }
+
         switch (item.getHeading()) {
             // Add a # for each heading level. No break, so we accumulate the right number.
             case DocumentApp.ParagraphHeading.TITLE:
@@ -69,28 +80,28 @@ function processItem(item, listCounters, images) {
                 suffix = '</h1></div><div class="content">';
                 break;
             case DocumentApp.ParagraphHeading.SUBTITLE:
-                prefix = '<h4 class="subtitle">', suffix = "</h4>";
+                prefix = '<h4 class="subtitle ' + alignmentClass + '">', suffix = "</h4>";
                 break;
             case DocumentApp.ParagraphHeading.HEADING6:
-                prefix = "<h6>", suffix = "</h6>";
+                prefix = "<h6 class=\"" + alignmentClass + "\">", suffix = "</h6>";
                 break;
             case DocumentApp.ParagraphHeading.HEADING5:
-                prefix = "<h5>", suffix = "</h5>";
+                prefix = "<h5 class=\"" + alignmentClass + "\">", suffix = "</h5>";
                 break;
             case DocumentApp.ParagraphHeading.HEADING4:
-                prefix = "<h4>", suffix = "</h4>";
+                prefix = "<h4 class=\"" + alignmentClass + "\">", suffix = "</h4>";
                 break;
             case DocumentApp.ParagraphHeading.HEADING3:
-                prefix = "<h3>", suffix = "</h3>";
+                prefix = "<h3 class=\"" + alignmentClass + "\">", suffix = "</h3>";
                 break;
             case DocumentApp.ParagraphHeading.HEADING2:
-                prefix = "<h2>", suffix = "</h2>";
+                prefix = "<h2 class=\"" + alignmentClass + "\">", suffix = "</h2>";
                 break;
             case DocumentApp.ParagraphHeading.HEADING1:
-                prefix = "<h1>", suffix = "</h1>";
+                prefix = "<h1 class=\"" + alignmentClass + "\">", suffix = "</h1>";
                 break;
             default:
-                prefix = "<p>", suffix = "</p>";
+                prefix = "<p class=\"" + alignmentClass + "\">", suffix = "</p>";
         }
 
         if (item.getNumChildren() == 0) {
