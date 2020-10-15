@@ -104,6 +104,11 @@ function processItem(item, listCounters, images) {
                 prefix = "<p class=\"" + alignmentClass + "\">", suffix = "</p>";
         }
 
+        if (item.getIndentStart() && item.getIndentStart() > 0 && !item.getIndentEnd()) {
+            prefix = '<blockquote style="border-left: 4px solid #ccc; padding-left: 10px;">' + prefix;
+            suffix = suffix + '</blockquote>';
+        }      
+      
         if (item.getNumChildren() == 0) {
             return "";
         }
@@ -141,6 +146,7 @@ function processItem(item, listCounters, images) {
                 suffix += "</ol>";
             }
         }
+        
         if (item.isAtDocumentEnd() || item.getNextSibling().getType() != DocumentApp.ElementType.LIST_ITEM) {
             if (gt === DocumentApp.GlyphType.BULLET ||
                 gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
@@ -209,6 +215,13 @@ function processText(item, output) {
     var text = item.getText();
     var indices = item.getTextAttributeIndices();
     var youTubeRegEx = /^(https:\/\/)(www\.)*(youtube\.com\/watch\?v=)([a-zA-Z0-9]+)/g;
+    var youTubeMusicRegEx = /^(https:\/\/)(music\.youtube\.com\/watch\?v=)([a-zA-Z0-9]+)/g;
+    var codeSuffix = "```";
+    if (text.indexOf(codeSuffix) != -1 && text.indexOf(codeSuffix, text.length - codeSuffix.length) !== -1) {
+      Logger.log("Found code to format: " + text);
+      output.push('<blockquote style="background: #F9F9F9; padding: 20px; margin: 5px;"><pre style="white-space: pre-wrap;">' + text.substring(3, text.length - 3).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre></blockquote>');
+      return ;
+    }
 
     if (indices.length <= 1) {
         // Assuming that a whole para fully italic is a quote
@@ -220,7 +233,10 @@ function processText(item, output) {
             var url = item.getLinkUrl()
             if (url.match(youTubeRegEx)) {
                 var parsedGroups = youTubeRegEx.exec(url);
-                output.push('<a href="' + url + '"><img src="https://img.youtube.com/vi/' + parsedGroups[4] + '/hqdefault.jpg" style="width: 100%;"><br>' + url +'</a>')
+                output.push('<a href="' + url + '"><img src="https://img.youtube.com/vi/' + parsedGroups[4] + '/hqdefault.jpg" style="width: 100%;"></a>')
+            } else if (url.match(youTubeMusicRegEx)) {
+                var parsedGroups = youTubeMusicRegEx.exec(url);
+                output.push('<a href="' + url + '"><img src="https://img.youtube.com/vi/' + parsedGroups[3] + '/hqdefault.jpg" style="width: 100%;"></a>')
             } else {
                 output.push('<a href="' + item.getLinkUrl() + '">' + text + '</a>');
             }
@@ -236,8 +252,6 @@ function processText(item, output) {
             var endPos = i + 1 < indices.length ? indices[i + 1] : text.length;
             var partText = text.substring(startPos, endPos);
 
-            Logger.log(partText);
-
             if (partAtts.LINK_URL) {
                 var url = item.getLinkUrl(startPos);
                 output.push('<a href="' + url + '">');
@@ -248,16 +262,16 @@ function processText(item, output) {
             if (partAtts.BOLD) {
                 output.push('<b>');
             }
-            if (partAtts.UNDERLINE) {
-                output.push('<u>');
-            }
             if (partAtts.STRIKETHROUGH) {
                 output.push('<del>');
+            }
+            if (partAtts.UNDERLINE) {
+                output.push('<u>');
             }
 
             // If someone has written [xxx] and made this whole text some special font, like superscript
             // then treat it as a reference and make it superscript.
-            // Unfortunately in Google Docs, there s no way to detect superscript
+            // Unfortunately in Google Docs, there's no way to detect superscript
             if (partText.indexOf('[') == 0 && partText[partText.length - 1] == ']') {
                 output.push('<sup>' + partText + '</sup>');
             } else if (partText.trim().indexOf('http://') == 0) {
@@ -275,13 +289,12 @@ function processText(item, output) {
             if (partAtts.BOLD) {
                 output.push('</b>');
             }
-            if (partAtts.UNDERLINE) {
-                output.push('</u>');
-            }
             if (partAtts.STRIKETHROUGH) {
                 output.push('</del>');
             }
-
+            if (partAtts.UNDERLINE) {
+                output.push('</u>');
+            }
         }
     }
 }
